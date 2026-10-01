@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: ServerSideApply=true
+  name: testdeployevents
+spec:
+  revisionHistoryLimit: 3
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      component: tool
+  replicas: 3
+  revisionHistoryLimit: 3
+  template:
+    metadata:
+      labels:
+        component: tool
+    spec:
+     containers:
+      - name: envar-demo-container
+        image: gcr.io/google-samples/node-hello:1.0
+        env:
+        - name: DEMO_GREETING
+          value: "Hello from the environment"
