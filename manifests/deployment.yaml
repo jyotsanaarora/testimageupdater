@@ -15,7 +15,6 @@ spec:
     matchLabels:
       component: tool
   replicas: 3
-  revisionHistoryLimit: 3
   template:
     metadata:
       labels:
